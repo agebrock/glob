@@ -1,13 +1,13 @@
 {
   "type": "module",
   "main": "build/src/main.js",
-  "bin":{
+  "bin": {
     "_glob": "build/src/cli.js"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/agebrock/glob.git"
-},
+  },
   "engines": {
     "node": ">= 20.9"
   },
@@ -48,9 +48,12 @@
     "tslib": "~2.6"
   },
   "name": "@agebrock/glob",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "fast glob lib optimized for easy usage",
-  "keywords": ["glob","cli"],
+  "keywords": [
+    "glob",
+    "cli"
+  ],
   "author": "Christoph Hagenbrock <agebrock@users.noreply.github.com>",
   "license": "Apache-2.0"
 }
