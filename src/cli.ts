@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { program } from 'commander';
 import {glob , Options, processOptions} from './main.js';
 
@@ -25,7 +26,10 @@ program
 
 program.parse();
 const options = processOptions(program.opts() as Options);
-
+if(program.args.length === 0){
+    console.error('No pattern provided');
+    program.help();
+}
 glob(program.args[0], options).on('data', (data) => {
     if(!options.stats){
         data = data.toString();

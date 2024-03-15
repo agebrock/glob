@@ -53,7 +53,7 @@ function collect(options: Options, files: unknown[]):Transform {
     });
 };
 
-const defaultOptions: Options = { dot: true, onlyFiles: true, absolute: true, braceExpansion: true, extglob: true, followSymbolicLinks: true, unique: true, uniqueBaseName: false, collect: false, stats:false };
+const defaultOptions: Options = {  dot: true, onlyFiles: true, absolute: true, braceExpansion: true, extglob: true, followSymbolicLinks: true, unique: true, uniqueBaseName: false, collect: false, stats:false , ignore: ['**/System Volume Information/**']};
 
 
 function processOptions(options: Options): Options {
@@ -96,6 +96,9 @@ function glob(pattern, options: Options): NodeJS.ReadableStream {
 
 
     let stream = fg.stream([pattern], options);
+    stream.on('error', (err) => {
+        console.error(err);
+    });
     if (options.uniqueBaseName) {
         stream = stream.pipe(uniqueFilesFilter(options));
     }
