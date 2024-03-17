@@ -21,7 +21,7 @@ program
     .option('-u, --unique', 'Ensure that the returned entries are unique')
     .option('--cwd <path>', 'The current working directory for the glob')
     .option('--dot', 'Include entries that begin with a .')
-    .option('-O --outputCollection <outputCollection>', 'Output the collection to a file')
+    .option('-O --outputCollection <outputCollection>', 'Output the collection to a file or stdout by passing "stdout"')
     .parse();
 
 program.parse();
@@ -30,10 +30,16 @@ if(program.args.length === 0){
     console.error('No pattern provided');
     program.help();
 }
-glob(program.args[0], options).on('data', (data) => {
+
+const g = glob(program.args[0], options);
+g.on('data', (data) => {
     if(!options.stats){
         data = data.toString();
     }
-    console.log(data);
+    if(options.outputCollection != 'stdout'){
+        console.log(data);
+    }
+
 });
+
 

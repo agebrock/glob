@@ -106,14 +106,24 @@ function glob(pattern, options: Options): NodeJS.ReadableStream {
     if (options.collect) {
         const files: unknown[] = [];
         stream = stream.pipe(collect(options, files));
+        stream.on('data', () => {
+         // noop
+        });
         stream.on('close', () => {
             stream.emit('files', files);
         });
         if (options.outputCollection) {
             stream.on('files', () => {
+
+                const output =  JSON.stringify(files);
+                if(options.outputCollection === 'stdout'){
+                    console.log(output);
+                    return;
+                }
+                console.log('writing to file', options.outputCollection);
                 const outDir = path.dirname(options.outputCollection);
                 fs.mkdirSync(outDir, { recursive: true });
-                fs.writeFileSync(options.outputCollection, JSON.stringify(files));
+                fs.writeFileSync(options.outputCollection, output);
             });
         }
     }
